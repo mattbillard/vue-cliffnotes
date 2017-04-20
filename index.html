@@ -1,0 +1,707 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js Cliffnotes</title>
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+
+  <script src="node_modules/vue/dist/vue.js"></script>  
+  <script src="node_modules/vuex/dist/vuex.js"></script>
+  <script src="node_modules/vue-router/dist/vue-router.js"></script>
+  <style>
+    body { 
+      background-color: #eee; 
+      padding-top: 40px; 
+    }
+    .main > * { 
+      border: solid 1px #ddd; 
+      padding: 20px; 
+      margin-bottom: 60px; 
+      background-color: #fff; 
+    }
+    .nav-right { 
+      border: solid 1px #ddd; 
+      padding: 20px; 
+      margin-bottom: 20px; 
+      background-color: #fff; 
+      position: fixed; 
+      top: 40px; 
+    }
+    .green { 
+      background-color: #cfc; 
+    }
+    .red { 
+      background-color: #fcc; 
+    }
+    .pad20 {
+      padding: 20px; 
+    }
+    .border1 {
+      border: solid 1px #ccc;
+    }
+    code {
+      display: block;
+    }
+  </style>
+  </head>
+<body>
+
+  <div id="app" class="container">
+    <div class="row">
+
+      <div class="col-xs-9 main">
+        <learn-intro></learn-intro>
+        <learn-basics></learn-basics>
+        <learn-if></learn-if>
+        <learn-for></learn-for>
+        <learn-model></learn-model>
+        <learn-css></learn-css>
+        <learn-click></learn-click>
+        <learn-keyup></learn-keyup>
+        <learn-forms></learn-forms>
+        <learn-miscellaneous></learn-miscellaneous>
+        <learn-basic-component></learn-basic-component>
+        <learn-component-outer></learn-component-outer>
+        <learn-router></learn-router>
+        <learn-vuex></learn-vuex>
+      </div>
+
+      <div class="col-xs-3">
+        <learn-nav></learn-nav>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    Vue.component('learn-nav', {
+      template: `
+        <ul class="nav nav-right">
+          <li><a href="#learn-intro">learn</a></li>
+          <li><a href="#learn-basics">basics</a></li>
+          <li><a href="#learn-if">v-if</a></li>
+          <li><a href="#learn-for">v-for</a></li>
+          <li><a href="#learn-model">v-model</a></li>
+          <li><a href="#learn-css">css</a></li>
+          <li><a href="#learn-click">v-on:click</a></li>
+          <li><a href="#learn-keyup">v-on:keyup</a></li>
+          <li><a href="#learn-forms">forms</a></li>
+          <li><a href="#learn-miscellaneous">miscellaneous</a></li>
+          <li><a href="#learn-basic-component">basic component</a></li>
+          <li><a href="#learn-component-outer">nested components</a></li>
+          <li><a href="#learn-router">router</a></li>
+          <li><a href="#learn-vuex">Vuex</a></li>
+        </ul>
+      `
+    });
+
+    Vue.component('learn-intro', {
+      template: `
+        <div id="learn-intro">
+          <div class="text-center">
+            <img src="assets/logo.png" alt="Vue logo" style="width:200px; height:200px;">
+          </div>
+          <br>
+
+          <h2>Vue.js Cliffnotes</h2>
+          <br>
+
+          <h3>Advantages of Vue</h3>
+          <p>It's like Vue has the best parts of each of the following</p>
+          <ul>
+            <li>Angular: intuitive templating syntax</li>
+            <li>React: emphasis on components</li>
+            <li>Redux: single, immutable data store</li>
+          </ul>
+          <p>And yet...</p>
+          <ul>
+            <li>It's smaller and <a href="http://stefankrause.net/js-frameworks-benchmark4/webdriver-ts/table.html" target="_blank">faster than all of them</a></li>
+            <li>It's <a href="http://www.timqian.com/star-history/#angular/angular.js&angular/angular&facebook/react&vuejs/vue" target="_blank">growing fastest in popularity</a></li>
+            <li>Has great documentation</li>
+            <li>Can quickly scaffold out entire solutions with Vue CLI</li>
+            <li>But still manages to be flexible and unopinionated</li>
+          </ul>
+          <br>
+
+          <h3>Resources</h3>
+          <p>I would recommend learning Vue in this order</p>
+          <ul>
+            <li><a href="https://vuejs.org/v2/guide/" target="_blank">Vue.js Documentation</a></li>
+            <li><a href="https://github.com/vuejs/learn-cli" target="_blank">Vue CLI</a></li>
+            <li><a href="https://router.vuejs.org/en/" target="_blank">Vue Router</a></li>
+            <li><a href="http://vuex.vuejs.org/en/" target="_blank">Vuex (Redux-like State Management)</a></li>
+            <li><a href="https://github.com/vuejs/vuex/tree/dev/examples" target="_blank">Vuex Examples</a></li>
+            <li><a href="https://github.com/vuejs/learn-devtools" target="_blank">Vue Devtools</a></li>
+            <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">Awesome Vue: more semi-offical Vue resources</a></li>
+          </ul>
+          <br>
+
+          <h3>Start Coding</h3>
+          <p>Use Vue CLI to scaffold a new project. Install it with:</p>
+          <pre>npm install -g vue-cli</pre>
+          <br>
+
+          <h4>Simple Project</h4>
+          <p>Start with a simple project like this page to learn Vue.js:</p>
+          <pre>vue init simple projectName</pre>
+          <br>
+
+          <h4>Webpack</h4>
+          <p>Once you're comfortable with Vue.js, start a new webpack project with Vuex, Vue Router, linting, tests, and more</p>
+          <pre>vue init webpack projectName</pre>
+        </div>
+      `
+    });
+
+    Vue.component('learn-basics', {
+      template: `
+        <div id="learn-basics">
+          <h2>Vue.js Basics</h2>
+
+          <div>
+            <h3>v-show and v-if</h3>
+            <button class="btn btn-sm" v-on:click="toggle1()">Toggle</button>
+            <br>
+            v-show: <span v-show="bool1">you can see me</span> <br>
+            v-if: <span v-if="bool1">you can see me</span>
+          </div>
+          <br>
+
+          <div>
+            <h3>v-for</h3>
+            <div v-for="x in arr">{{ x }}</div>
+          </div>
+          <br>
+
+          <div>
+            <h3>v-model</h3>
+            <input v-model="message" />
+            <span>{{ message }}</span>
+          </div>
+          <br>
+
+          <div>
+            <h3>v-bind:class</h3>
+            <br>
+            <button class="btn btn-sm" v-on:click="toggle2()">Toggle</button>
+            <div v-bind:class="{ green:bool2, red:!bool2 }">Example</div>
+          </div>
+          <br><br>
+
+          <div>
+            <h3>Filters</h3>
+            <br>
+            Uppercase: {{ message | upperCase }}
+          </div>
+        </div>
+      `,
+      data() { 
+        return {
+          bool1: true,
+          bool2: true,
+          arr: [0,1,2],
+          message: 'message',
+          sampleHtml: `<a href="javascript:alert('hi')">A link</a>`
+        }; 
+      },
+      methods: {
+        toggle1() {
+          this.bool1 = !this.bool1;
+        },
+        toggle2() {
+          this.bool2 = !this.bool2;
+        },
+      },
+      filters: {
+        upperCase(value) {
+          return value.toUpperCase();
+        }
+      }
+    });
+
+    Vue.component('learn-if', {
+      template: `
+        <div id="learn-if">
+          <h2>v-if, v-else-if, v-else</h2>
+
+          <button class="btn btn-sm" v-on:click="choice = 'A'">A</button>
+          <button class="btn btn-sm" v-on:click="choice = 'B'">B</button>
+          <button class="btn btn-sm" v-on:click="choice = 'C'">C</button>
+          <button class="btn btn-sm" v-on:click="choice = 'D'">D</button>
+
+          <div v-if="choice === 'A'">A</div>
+          <div v-else-if="choice === 'B'">B</div>
+          <div v-else-if="choice === 'C'">C</div>
+          <div v-else>Not A/B/C</div>
+        </div>
+      `,
+      data() { 
+        return {
+          choice: null
+        }; 
+      },
+    });
+
+    Vue.component('learn-for', {
+      template: `
+        <div id="learn-for">
+          <h2>v-for</h2>
+
+          <h3>n in arr1</h3>
+          <div v-for="n in arr1">{{ n }}</div>
+
+          <h3>(obj, idx) in arr2</h3>
+          <div v-for="(obj, idx) in arr2">{{ idx }}: {{ obj.text }}</div>
+
+          <h3>(val, key) in obj1</h3>
+          <div v-for="(val, key) in obj1">{{ key }}: {{ val }}</div>
+
+          <h3>n in myInt</h3>
+          <div v-for="n in myInt">{{ n }}</div>
+        </div>
+      `,
+      data() { 
+        return {
+          arr1: [0,1,2],
+          arr2: [
+            { text: 'zero' },
+            { text: 'one' },
+            { text: 'two' },
+          ],
+          obj1: {
+            a: 'AAA',
+            b: 'BBB',
+            c: 'CCC',
+          },
+          myInt: 3,
+        }; 
+      },
+    });
+
+    Vue.component('learn-model', {
+      template: `
+        <div id="learn-model">
+          <h2>v-model</h2>
+
+          <h3>Basic example</h3>
+          <input v-model="message" />
+          <span>{{ message }}</span>
+
+          <h3>v-model.trim</h3>
+          <input v-model.trim="myString" />
+          |<span>{{ myString }}</span>|
+
+          <h3>v-model.number</h3>
+          <input v-model.number="myInt" type="number" />
+          <span>{{ myInt }}</span>
+        </div>
+      `,
+      data() { 
+        return {
+          message: 'message',
+          myString: 'myString',
+          myInt: 0,
+        }; 
+      },
+    });
+
+    Vue.component('learn-css', {
+      template: `
+        <div id="learn-css">
+          <h2>class and style</h2>
+          <div>
+            <h3>v-bind:class</h3>
+            <button class="btn btn-sm" v-on:click="toggle1()">Toggle</button>
+            <br><br>
+
+            <div v-bind:class="{ green:bool1, red:!bool1 }">v-bind:class inline</div>
+            <div v-bind:class="classObj">v-bind:class obj</div>
+          </div>
+          <br><br>
+
+          <div>
+            <h3>v-bind:style</h3>
+            fontSize: <input v-model="fontSize" type="number">
+            <div v-bind:style="{ fontSize: fontSize + 'px' }">v-bind:style inline</div>
+            <div v-bind:style="styleObj">v-bind:style obj</div>
+          </div>
+        </div>
+      `,
+      data() { 
+        return {
+          bool1: true,
+          fontSize: 14,
+        }; 
+      },
+      computed: {
+        classObj() {
+          return { green: this.bool1, red: !this.bool1 };
+        },
+        styleObj() {
+          return { fontSize: this.fontSize + 'px' };
+        },
+      },
+      methods: {
+        toggle1() {
+          this.bool1 = !this.bool1;
+        },
+      }
+    });
+
+    Vue.component('learn-click', {
+      template: `
+        <div id="learn-click">
+          <h2>v-on:click</h2>
+          {{ count }}
+          <br>
+          <br>
+          <button class="btn btn-sm" v-on:click="count++">v-on:click="count++"</button> <br>
+          <button class="btn btn-sm" v-on:click="add1">v-on:click="add1"</button> <br>
+          <button class="btn btn-sm" v-on:click="add2(2)">v-on:click="add2(2)"</button> <br>
+          <button class="btn btn-sm" v-on:click="add3($event)">v-on:click="add3($event)"</button> <br>
+        </div>
+      `,
+      data() { 
+        return {
+          count: 0
+        }; 
+      },
+      methods: {
+        add1() {
+          this.count += 1;
+        },
+        add2(n) {
+          this.count += n;
+        },
+        add3($event) {
+          alert($event.target.innerText);
+          this.count += 3;
+        },
+      }
+    });
+
+    Vue.component('learn-keyup', {
+      template: `
+        <div id="learn-keyup">
+          <h2>v-on:keyup</h2>
+          <p>
+            <strong>Instructions:</strong> <br>
+            Type in the field. v-on:keyup <br>
+            Enter = submit <br>
+            Esc = Cancel
+          </p>
+          <br>
+
+          <input
+            v-model="message"
+            v-on:keyup="log($event)" 
+            v-on:keyup.enter="submit" 
+            v-on:keyup.esc="cancel"
+          />
+          <br>
+
+          console: 
+          <br>
+          {{ console }}
+        </div>
+      `,
+      data() { 
+        return {
+          message: '',
+          console: ''
+        }; 
+      },
+      methods: {
+        log($event) {
+          this.console = 'You pressed: ' + $event.key;
+        },
+        submit() {
+          this.console = 'Submit: ' + this.message;
+        },
+        cancel() {
+          this.console = 'Cancel';
+          this.message = '';
+        },
+      }
+    });
+
+    Vue.component('learn-forms', {
+      template: `
+        <div id="learn-forms">
+          <h2>forms</h2>
+          <strong>Input</strong> <br>
+          <input v-model="myInput">
+          <div>{{ myInput }}</div>
+          <br>
+          <br>
+
+          <strong>Textarea</strong> <br>
+          <textarea v-model="myTextarea"></textarea>
+          <div style="white-space: pre">{{ myTextarea }}</div>
+          <br>
+          <br>
+
+          <strong>Checkbox</strong> <br>
+          <input type="checkbox" id="checkbox" v-model="myCheckbox">
+          <label for="checkbox">{{ myCheckbox }}</label>
+          <br>
+          <br>
+
+          <strong>Radio</strong> <br>
+          <input type="radio" id="one" value="One" v-model="myRadio"><label for="one">One</label><br>
+          <input type="radio" id="two" value="Two" v-model="myRadio"><label for="two">Two</label><br>
+          <span>Picked: {{ myRadio }}</span>
+          <br>
+          <br>
+
+          <strong>Select</strong> <br>
+          <select v-model="mySelect">
+            <option v-for="myOpt in myOptions" v-bind:value="myOpt.value">{{ myOpt.text }}</option>
+          </select>
+          <br>
+          <span>mySelect: {{ mySelect }}</span>
+        </div>
+      `,
+      data() { 
+        return {
+          myInput: 'myInput',
+          myTextarea: 'myTextarea',
+          myCheckbox: true,
+          myRadio: null,
+          mySelect: null,
+          myOptions: [
+            { text: 'One', value: 'AAA' },
+            { text: 'Two', value: 'BBB' },
+            { text: 'Three', value: 'CCC' }
+          ]
+        }; 
+      }
+    });
+
+    Vue.component('learn-miscellaneous', {
+      template: `
+        <div id="learn-miscellaneous">
+          <h2>Vue.js Miscellaneous</h2>
+
+          <h3>v-once</h3>
+          <input v-model="message" />
+          <div>normal binding: {{ message }}</div>
+          <div v-once>v-once: {{ message }}</div> 
+
+          <h3>v-html</h3>
+          <div v-html="sampleHtml"></div> 
+        </div>
+      `,
+      data() { 
+        return {
+          message: 'message',
+          sampleHtml: `<a href="javascript:alert('hi')">A link</a>`
+        }; 
+      },
+    });
+
+    Vue.component('learn-basic-component', {
+      template: `
+        <div id="learn-basic-component">
+          <h2>Basic Component</h2>
+          <div>{{ count }} + 1 = {{ sum }}</div>
+          <button v-on:click="increment">Increment</button>
+        </div>
+      `,
+      data() {
+        return {
+          count: 0
+        };
+      },
+      methods: {
+        increment() {
+          this.count += 1
+        }
+      },
+      computed: {
+        sum() {
+          return this.count +1;
+        }
+      },
+      created() { console.log('life cycle hook: created'); },
+      mounted() { console.log('life cycle hook: mounted'); },
+      updated() { console.log('life cycle hook: updated'); },
+      destroyed() { console.log('life cycle hook: destroyed'); },
+    });
+
+    Vue.component('learn-component-outer', {
+      template: `
+        <div id="learn-component-outer">
+          <h2>Nested Components</h2>
+          <div class="border1 pad20">
+            {{ count }}
+            <br><br>
+
+            <learn-component-inner 
+              v-bind:inner-count="count"
+              v-on:inner-increment="incrementParent"
+            ></learn-component-inner>
+          </div>
+        </div>
+      `,
+      data() {
+        return {
+          count: 0
+        };
+      },
+      methods: {
+        incrementParent() {
+          this.count += 1
+        }
+      },
+    });
+
+    Vue.component('learn-component-inner', {
+      template: `
+        <div class="border1 pad20">
+          <button v-on:click="emitIncrement">Increment</button> {{ innerCount }}
+        </div>
+      `,
+      props: [
+        'innerCount',
+      ],
+      methods: {
+        emitIncrement() {
+          this.$emit('inner-increment');
+        }
+      },
+    });
+
+
+    // Vue Router ----------------------------------------
+
+    const RouteA = {
+      template: `<div>{{ title }}</div>`,
+      data() {
+        return {
+          title: 'Example route A'
+        };
+      }
+    };
+    const RouteB = {
+      template: `<div>{{ title }}</div>`,
+      data() {
+        return {
+          title: 'Example route B'
+        };
+      }
+    };
+    const RouteC = {
+      template: `<div>{{ title }}</div>`,
+      data() {
+        return {
+          title: 'Example route C'
+        };
+      }
+    };
+
+    const router = new VueRouter({
+      routes: [
+        {
+          path: '/route-a',
+          name: 'RouteA',
+          component: RouteA
+        },
+        {
+          path: '/route-b',
+          name: 'RouteB',
+          component: RouteB
+        },
+        {
+          path: '/route-c',
+          name: 'RouteC',
+          component: RouteC
+        },
+      ]
+    });
+    
+    Vue.component('learn-router', {
+      template: `
+        <div id="learn-router">
+          <h2>Vue Route</h2>
+          <ul>
+            <li><router-link to="/route-a">Route A</router-link></li>
+            <li><router-link to="/route-b">Route B</router-link></li>
+            <li><router-link to="/route-c">Route C</router-link></li>
+          </ul>
+          <div class="well">
+            <router-view></router-view>
+          </div>
+        </div>
+      `,
+    });
+
+
+    // Vuex ----------------------------------------    
+
+    const store = new Vuex.Store({
+      state: {
+        count: 0,
+      },
+      getters: {
+        sum(state) {
+          return state.count +1;
+        }
+      },
+      mutations: {
+        increment(state, payload) {
+          state.count += payload.amount
+        },
+      },
+      actions: {
+        incrementAsync(context, payload) {
+          setTimeout(() => {
+            context.commit('increment', payload)
+          }, 500)
+        }
+      }
+    });
+
+    Vue.component('learn-vuex', {
+      template: `
+        <div id="learn-vuex">
+          <h2>Vuex</h2>
+          <button v-on:click="increment(1)">Increment</button>
+          <button v-on:click="incrementAsync(1)">Increment Async</button>
+          <div>
+            {{ count }} + 1 = {{ sum }}
+          </div>
+        </div>
+      `,
+      computed: {
+        count() {
+          return this.$store.state.count
+        },
+        sum() {
+          return this.$store.getters.sum
+        }
+      },
+      methods: {
+        increment(n) {
+          this.$store.commit('increment', { amount: n });
+        },
+        incrementAsync(n) {
+          this.$store.dispatch('incrementAsync', { amount: n })
+        },
+      }
+    });
+
+
+    // App ----------------------------------------    
+
+    new Vue({
+      el: '#app',
+      router,
+      store,
+    });
+
+  </script>
+</body>
+</html>

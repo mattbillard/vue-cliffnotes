@@ -1,0 +1,19 @@
+{
+  "name": "learning-vue",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "vue": "^2.2.6",
+    "vue-router": "^2.4.0",
+    "vuex": "^2.3.1"
+  },
+  "devDependencies": {
+    "http-server": "^0.9.0"
+  },
+  "scripts": {
+    "start": "http-server ./"
+  },
+  "author": "",
+  "license": "mIT"
+}
