@@ -183,7 +183,7 @@
           <br>
 
           <div>
-            <h3>v-bind:class</h3>
+            <h3>bind:class</h3>
             <br>
             <button class="btn btn-sm" v-on:click="toggle2()">Toggle</button>
             <div v-bind:class="{ green:bool2, red:!bool2 }">Example</div>
@@ -195,6 +195,13 @@
             <br>
             Uppercase: {{ message | upperCase }}
           </div>
+          <br><br>
+
+          <div>
+            <h3>Bind HTML</h3>
+            <div v-html="sampleHtml"></div>
+          </div>
+
         </div>
       `,
       data() { 
@@ -671,7 +678,7 @@
           <button v-on:click="increment(1)">Increment</button>
           <button v-on:click="incrementAsync(1)">Increment Async</button>
           <div>
-            {{ count }} + 1 = {{ sum }}
+            {{ count }} + 1 = {{ sum }} 
           </div>
         </div>
       `,
